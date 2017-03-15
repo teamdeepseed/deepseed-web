@@ -1,1 +1,7 @@
-import { PROJECT_NAME } from '../App/constants';
+import { PROJECT_NAME } from 'containers/App/constants';
+const CONTAINER_NAME = 'Photo';
+
+export const FETCH_PHOTOS_REQUEST = `${PROJECT_NAME}/${CONTAINER_NAME}/FETCH_PHOTOS_REQUEST`;
+export const FETCH_PHOTOS_SUCCESS = `${PROJECT_NAME}/${CONTAINER_NAME}/FETCH_PHOTOS_SUCCESS`;
+export const FETCH_PHOTOS_FAIL = `${PROJECT_NAME}/${CONTAINER_NAME}/FETCH_PHOTOS_FAIL`;
+
