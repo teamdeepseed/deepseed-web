@@ -10,11 +10,11 @@ const PhotoList = (props) => {
       {isFetching ? (
         <h1> Still Loading </h1>
       ) : (
-        <ul>
+        <div className="row">
           {items && items.map(item => (
             <PhotoCard key={item.id} item={item} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   )
@@ -35,4 +35,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(PhotoList);
-

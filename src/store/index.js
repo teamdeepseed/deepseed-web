@@ -34,4 +34,3 @@ const globalStore = createStore(
 sagaMiddleware.run(photoSaga);
 
 export default globalStore;
-

@@ -14,5 +14,11 @@ export function listPhotos(page, perPage, orderBy) {
     .then(parseJSON)
     .then(response => ({ response }))
     .catch(error => ({ error }))
-}
+};
 
+export function searchPhotos(query, category, page, perPage) {
+  return unsplash.photos.searchPhotos(query, category, page, perPage)
+    .then(parseJSON)
+    .then(response => ({ response }))
+    .catch(error => ({ error }))
+};
