@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router'
 
 const PhotoCard = (props) => (
     <div className="col-4" style={{ marginBottom: '2em' }}>
-      <a href="#">
+      <Link to={`/photo/${props.item.id}`}>
         <img className="img-responsive img-thumbnail" src={props.item.urls.small} alt="Unsplash Latest Photos" />
-      </a>
+      </Link>
     </div>
 );
 
