@@ -2,20 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PhotoCard from 'components/Photo/PhotoCard';
+import LoadingErrorWrapper from 'components/General/LoadingErrorWrapper';
 
 const PhotoList = (props) => {
-  const { isFetching, items } = props.photo;
+  const { isFetching, items, error } = props.photo;
   return (
     <div>
-      {isFetching ? (
-        <h1> Still Loading </h1>
-      ) : (
+      <LoadingErrorWrapper laoding={isFetching} error={error}>
         <div className="row">
           {items && items.map(item => (
             <PhotoCard key={item.id} item={item} />
           ))}
         </div>
-      )}
+      </LoadingErrorWrapper>
     </div>
   )
 }

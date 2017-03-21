@@ -22,3 +22,10 @@ export function searchPhotos(query, category, page, perPage) {
     .then(response => ({ response }))
     .catch(error => ({ error }))
 };
+
+export function getPhoto(id, width, height, rectangle) {
+  return unsplash.photos.getPhoto(id, width, height, rectangle)
+    .then(parseJSON)
+    .then(response => ({ response }))
+    .catch(error => ({ error }))
+};

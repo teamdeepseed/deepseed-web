@@ -1,4 +1,5 @@
 import photos from './photos.json';
+import photo from './photo.json';
 import photoResults from './photoResults.json';
 
 const promiseWrapper = (json) => {
@@ -18,6 +19,12 @@ export function listPhotos(page, perPage, orderBy) {
 
 export function searchPhotos(query, category, page, perPage) {
   return promiseWrapper(photoResults)
+    .then(response => ({ response }))
+    .catch(error => ({ error }))
+}
+
+export function getPhoto(id, width, height, rectangle) {
+  return promiseWrapper(photo)
     .then(response => ({ response }))
     .catch(error => ({ error }))
 }

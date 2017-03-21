@@ -11,9 +11,10 @@ const initialState = {
 const app = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_API: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         liveApis: !state.liveApis
-      });
+      };
     }
     default: {
       return state;

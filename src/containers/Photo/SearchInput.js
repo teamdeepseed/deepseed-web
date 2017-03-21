@@ -9,7 +9,7 @@ class SearchInput extends Component {
     super(props);
     this.state = {
       typingTimer: 0,
-      doneTypingInterval: 1000,
+      doneTypingInterval: 400,
       recentSearchValue: ''
     }
   }
@@ -17,7 +17,7 @@ class SearchInput extends Component {
   resetComponent() {
     this.setState({
       typingTimer: 0,
-      doneTypingInterval: 1000,
+      doneTypingInterval: 400,
     })
   }
 
