@@ -160,7 +160,9 @@ module.exports = {
       }
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "url" loader exclusion list.
-    ]
+    ],
+    // not ideal but to ignore pre-built javascript file warning
+    noParse: [/html2canvas/, ]
   },
 
   // We use PostCSS for autoprefixing only.
