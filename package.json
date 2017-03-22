@@ -5,8 +5,10 @@
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "html2canvas": "^0.5.0-beta4",
+    "konva": "^1.5.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-konva": "^1.1.1",
     "react-redux": "^5.0.3",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.8",
