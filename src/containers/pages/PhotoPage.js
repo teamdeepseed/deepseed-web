@@ -31,7 +31,6 @@ class PhotoPage extends Component {
     const propItem = this.props.photo.item;
     return (
       <div className="photopage">
-        <h1 className="text-center" style={{ marginBottom: '2em' }}>Photo Generator</h1>
         <div className="row">
           <PhotoGenerator 
             defaultPhoto={item || propItem} 
