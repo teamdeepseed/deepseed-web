@@ -1,3 +1,14 @@
+## DeepSeed Web App
+
+### TODO 
+
+- load more scroll
+- upload your own image htae mal
+- social share 
+- make up lane chal (UI/UX)
+
+## Development
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
