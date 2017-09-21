@@ -85,7 +85,7 @@ class PhotoGenerator extends Component {
             <LoadingErrorWrapper loading={isFetching} error={error}>
               {defaultPhoto && (
                   <Stage width={renderImage ? renderImage.width : 400} height={renderImage ? renderImage.height : 267} ref={(stage) => { this.stage = stage; }}>
-                    <Layer ref={(layer) => { this.layer = layer; }} style={{ textAlign: 'center' }}>
+                    <Layer ref={(layer) => { this.layer = layer; }} style={{ textAlign: 'left' }}>
                       <Image
                         image={renderImage}
                       />
@@ -97,7 +97,7 @@ class PhotoGenerator extends Component {
                         {textValue && (
                           <Rect
                             width={renderImage ? renderImage.width : 400}
-                            height={this.text ? this.text.getHeight() + 10 : null}
+                            height={this.text ? this.text.getHeight() : null}
                             fill={`rgb(${rectBackground.r},${rectBackground.g},${rectBackground.b})`}
                             opacity={rectBackground.a}
                             ref={(rect) => { this.rect = rect; }}
@@ -110,6 +110,7 @@ class PhotoGenerator extends Component {
                           fill='white'
                           width={renderImage ? renderImage.width : 400}
                           align='center'
+                          padding={20}
                           ref={(text)  => { this.text = text; }}
                         />
                       </Group>
