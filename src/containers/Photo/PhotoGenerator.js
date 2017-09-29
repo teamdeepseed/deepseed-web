@@ -1,13 +1,33 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {
+  Component
+} from 'react';
+import {
+  connect
+} from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
-import {Layer, Image, Stage, Text, Rect, Group } from 'react-konva';
-import { SketchPicker } from 'react-color';
+import {
+  Layer,
+  Image,
+  Stage,
+  Text,
+  Rect,
+  Group
+} from 'react-konva';
+import {
+  CompactPicker,
+  AlphaPicker
+} from 'react-color';
 import InputRange from 'react-input-range';
 
 import 'react-input-range/lib/css/index.css';
 
 import LoadingErrorWrapper from 'components/General/LoadingErrorWrapper';
+import {
+  SUPPORTED_FONTS
+} from './constants';
+import {
+  dasherize
+} from 'utils/helpers';
 
 class PhotoGenerator extends Component {
   constructor(props) {
@@ -16,6 +36,13 @@ class PhotoGenerator extends Component {
       image: null,
       textValue: null,
       textSize: 30,
+      fontFamily: "Myanmar3",
+      fontColor: {
+        r: 255,
+        g: 255,
+        b: 255,
+        a: 0.7
+      },
       rectBackground: {
         r: 0,
         g: 0,
@@ -41,21 +68,55 @@ class PhotoGenerator extends Component {
     });
   }
 
+  handleFontChange = (e) => {
+    this.setState({
+      fontFamily: e.target.value
+    });
+  }
+
   handleRectColorChange = (color) => {
-    this.setState({ rectBackground: color.rgb });
+    this.setState({
+      rectBackground: color.rgb
+    });
+  }
+
+  handleRectOpacityChange = (color) => {
+    let oldColor = this.state.rectBackground;
+    this.setState({
+      rectBackground: {...oldColor,
+        a: color.rgb.a
+      }
+    });
+  }
+
+  handleFontColorChange = (color) => {
+    this.setState({
+      fontColor: color.rgb
+    });
+  }
+
+  handleFontOpacityChange = (color) => {
+    let oldColor = this.state.fontColor;
+    this.setState({
+      fontColor: {...oldColor,
+        a: color.rgb.a
+      }
+    });
   }
 
   handleFontSizeChange = (value) => {
-    this.setState({ textSize: value });
+    this.setState({
+      textSize: value
+    });
   }
-  
+
   handleGroupDrag = (pos) => {
     let posY = pos.y;
     // take layer height instaed when rect height surpass layer's
-    let rectHeight = this.rect.getHeight() > this.layer.getHeight() ? this.layer.getHeight() :  this.rect.getHeight();
+    let rectHeight = this.rect.getHeight() > this.layer.getHeight() ? this.layer.getHeight() : this.rect.getHeight();
     if (pos.y > this.layer.getHeight() - rectHeight) {
       posY = this.layer.getHeight() - rectHeight;
-    } else if (pos.y < 0)  {
+    } else if (pos.y < 0) {
       posY = 0;
     }
     return {
@@ -70,9 +131,22 @@ class PhotoGenerator extends Component {
   }
 
   render() {
-    const { photo, defaultPhoto } = this.props;
-    const { textValue, textSize, image, rectBackground } = this.state;
-    const { isFetching, error } = photo;
+    const {
+      photo,
+      defaultPhoto
+    } = this.props;
+    const {
+      textValue,
+      textSize,
+      image,
+      rectBackground,
+      fontColor,
+      fontFamily
+    } = this.state;
+    const {
+      isFetching,
+      error
+    } = photo;
     const renderImage = image;
     if (defaultPhoto && renderImage) {
       renderImage.src = defaultPhoto.urls.regular;
@@ -83,69 +157,120 @@ class PhotoGenerator extends Component {
         <div className="row" style={{ marginBottom: '2em' }}>
           <div className="col-md-12 col-sm-12">
             <LoadingErrorWrapper loading={isFetching} error={error}>
-              {defaultPhoto && (
-                  <Stage width={renderImage ? renderImage.width : 400} height={renderImage ? renderImage.height : 267} ref={(stage) => { this.stage = stage; }}>
-                    <Layer ref={(layer) => { this.layer = layer; }} style={{ textAlign: 'center' }}>
-                      <Image
-                        image={renderImage}
+              <div className="row">
+                <div className="col-md-4 col-sm-12">
+                  <div className="row">
+                    <TextareaAutosize
+                      minRows={1}
+                      style={{textAlign: 'center'}}
+                      className={`form-control ${dasherize(fontFamily)}`}
+                      placeholder="Write Something Here..."
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                  <br />
+                  <div className="row controls">
+                    <div className="col-md-12">
+                      <h5>Font</h5>
+                    </div>
+                    <br />
+                    <div className="col-md-12">
+                      <select onChange={this.handleFontChange}>
+                        {
+                          SUPPORTED_FONTS.map((fontName) => {
+                            return <option key={fontName} value={fontName}>{fontName}</option>
+                          })
+                        }
+                      </select>
+                    </div>
+                    <div className="col-md-12">
+                      <CompactPicker
+                        color={fontColor}
+                        onChange={this.handleFontColorChange}
                       />
-                      <Group
-                        draggable
-                        dragBoundFunc={this.handleGroupDrag}
-                        ref={(group) => { this.group = group; }}
-                      >
-                        {textValue && (
-                          <Rect
-                            width={renderImage ? renderImage.width : 400}
-                            height={this.text ? this.text.getHeight() + 10 : null}
-                            fill={`rgb(${rectBackground.r},${rectBackground.g},${rectBackground.b})`}
-                            opacity={rectBackground.a}
-                            ref={(rect) => { this.rect = rect; }}
-                          />
-                        )}
-                        <Text
-                          text={textValue}
-                          fontSize={textSize}
-                          fontFamily='Calibri'
-                          fill='white'
-                          width={renderImage ? renderImage.width : 400}
-                          align='center'
-                          ref={(text)  => { this.text = text; }}
-                        />
-                      </Group>
-                    </Layer>
-                  </Stage>
-              )}
+                    </div>
+                    <br />
+                    <div className="col-md-12">
+                      <span>Opacity</span>
+                      <AlphaPicker
+                        color={fontColor}
+                        height={'30px'}
+                        onChange={this.handleFontOpacityChange}
+                      />
+                    </div>
+                    <br />
+                    <div className="col-md-12">
+                      <span>Size</span>
+                      <InputRange
+                        maxValue={90}
+                        minValue={30}
+                        value={textSize}
+                        onChange={this.handleFontSizeChange}
+                      />
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="row controls">
+                    <div className="col-md-12">
+                      <h5>Background</h5>
+                    </div>
+                    <br />
+                    <div className="col-md-12">
+                      <CompactPicker
+                        color={rectBackground}
+                        onChange={this.handleRectColorChange}
+                      />
+                    </div>
+                    <br />
+                    <div className="col-md-12">
+                      <span>Opacity</span>
+                      <AlphaPicker
+                        color={rectBackground}
+                        height={'30px'}
+                        onChange={this.handleRectOpacityChange}
+                      />
+                    </div>
+                  </div>
+                  <button className="btn btn-default" onClick={this.generatePhoto} style={{ marginTop: '2em' }}>Generate</button>
+                </div>
+                <div className="col-md-8 col-sm-12">
+                    {defaultPhoto && (
+                        <Stage width={renderImage ? renderImage.width : 400} height={renderImage ? renderImage.height : 267} ref={(stage) => { this.stage = stage; }}>
+                          <Layer ref={(layer) => { this.layer = layer; }} style={{ textAlign: 'left' }}>
+                            <Image
+                              image={renderImage}
+                            />
+                            <Group
+                              draggable
+                              dragBoundFunc={this.handleGroupDrag}
+                              ref={(group) => { this.group = group; }}
+                            >
+                              <Rect
+                                width={renderImage ? renderImage.width : 400}
+                                height={this.text ? this.text.getHeight() : null}
+                                fill={`rgba(${rectBackground.r},${rectBackground.g},${rectBackground.b}, ${rectBackground.a})`}
+                                opacity={(textValue && textValue !== '') ? rectBackground.a : 0}
+                                ref={(rect) => { this.rect = rect; }}
+                              />
+                              <Text
+                                text={textValue}
+                                fontSize={textSize}
+                                fontFamily={fontFamily}
+                                fill={`rgba(${fontColor.r},${fontColor.g},${fontColor.b}, ${fontColor.a})`}
+                                width={renderImage ? renderImage.width : 400}
+                                align='center'
+                                padding={20}
+                                ref={(text)  => { this.text = text; }}
+                              />
+                            </Group>
+                          </Layer>
+                        </Stage>
+                    )}
+                </div>
+              </div>
             </LoadingErrorWrapper>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12 col-sm-12">
-            <TextareaAutosize
-              minRows={1}
-              className="form-control"
-              placeholder="Feeling..."
-              onChange={this.handleChange}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-              <SketchPicker 
-                color={rectBackground}
-                onChange={this.handleRectColorChange}
-              />
-          </div>
-          <div className="col-md-6">
-              <InputRange
-                maxValue={90}
-                minValue={30}
-                value={textSize}
-                onChange={this.handleFontSizeChange} 
-              />
-          </div>
-        </div>
-        <button className="btn btn-default" onClick={this.generatePhoto} style={{ marginTop: '2em' }}>Generate</button>
       </div>
     )
   }
@@ -156,7 +281,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state) => {
-  const { photo } = state;
+  const {
+    photo
+  } = state;
   return {
     photo
   }

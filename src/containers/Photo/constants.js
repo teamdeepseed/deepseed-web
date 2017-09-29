@@ -12,3 +12,5 @@ export const SEARCH_PHOTOS_FAIL = `${PROJECT_NAME}/${CONTAINER_NAME}/SEARCH_PHOT
 export const GET_PHOTO_REQUEST = `${PROJECT_NAME}/${CONTAINER_NAME}/GET_PHOTO_REQUEST`;
 export const GET_PHOTO_SUCCESS = `${PROJECT_NAME}/${CONTAINER_NAME}/GET_PHOTO_SUCCESS`;
 export const GET_PHOTO_FAIL = `${PROJECT_NAME}/${CONTAINER_NAME}/GET_PHOTO_FAIL`;
+
+export const SUPPORTED_FONTS = [ 'Roboto', 'Myanmar3', 'Zawgyi', 'Padauk', 'Pyidaungsu', 'Noto Sans Myanmar' ]
