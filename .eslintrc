@@ -23,8 +23,11 @@
   "rules": {
     "quotes": [2, "single"],
     "strict": [2, "never"],
+    "comma-dangle": [2, "never"],
+    "no-underscore-dangle": 0,
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/react-in-jsx-scope": 2,
   }
 }
